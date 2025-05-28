@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Responsive Login and Signup Form </title>
+ 
+  <link rel="stylesheet" href="login.css">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <script type="module" src="firebaseAuth.js"></script> <!-- Your Firebase file -->
+
+</head>
+<body>
+  <section class="container forms">
+    <!-- Login Form -->
+    <div class="form login">
+      <div class="form-content">
+        <header>Login</header>
+        <form action="#" id="loginForm">
+           <div id="signInMessage" class="messageDiv" style="display:none;"></div>
+          <div class="field input-field">
+            <input type="email" id="email" placeholder="Email" class="input">
+          </div>
+          <div class="field input-field">
+            <input type="password" id="password" placeholder="Password" class="password">
+            <i class='bx bx-hide eye-icon'></i>
+          </div>
+          <div class="form-link">
+            <a href="#" class="forgot-pass">Forgot password?</a>
+          </div>
+          <div class="field button-field">
+            <button type="submit" id="submitSignIn">Login</button>
+          </div>
+        </form>
+        <div class="form-link">
+          <span>Don't have an account? 
+            <a href="./signUp.html">Signup</a></span>
+        </div>
+      </div>
+  </section>
+  
+  <!-- <script src="meghalogin.js"></script> -->
+</body>
+</html>

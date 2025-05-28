@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup Page</title>
+  <link rel="stylesheet" href="signup.css" />
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <script type="module" src="firebaseauth.js"></script> <!-- Your Firebase file -->
+</head>
+<body>
+  <section class="container forms">
+    <div class="form signup">
+      <div class="form-content">
+        <header>Create Account</header>
+        <form action="#" id="signupForm">
+          <!-- Message Div for displaying error/success -->
+          <div id="signUpMessage" class="messageDiv" style="display:none;"></div>
+          <!-- First Name and Last Name -->
+          <div class="field input-field">
+            <input type="text" id="fName" placeholder="First Name" class="input" required />
+          </div>
+          <div class="field input-field">
+            <input type="text" id="lName" placeholder="Last Name" class="input" required />
+          </div>
+
+          <!-- Email and Password fields -->
+          <div class="field input-field">
+            <input type="email" id="rEmail" placeholder="Email" class="input" required />
+          </div>
+          <div class="field input-field">
+            <input type="password" id="rPassword" placeholder="Create password" class="password" required />
+          </div>
+          <div class="field input-field">
+            <input type="password" id="rConfirmPassword" placeholder="Confirm password" class="password" required />
+            <i class='bx bx-hide eye-icon'></i>
+          </div>
+
+          <!-- Signup Button -->
+          <div class="field button-field">
+            <button type="submit" id="submitSignUp">Sign Up</button>
+          </div>
+        </form>
+
+        <!-- Link to login page -->
+          <div class="form-link">
+            <span>Already have an account? <a href="./login.html">Login</a></span>
+          </div>
+      </div>
+    </div>
+  </section>
+  <!-- <script src="meghalogin.js"></script> -->
+</body>
+</html>

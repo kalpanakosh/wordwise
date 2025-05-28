@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WordWise – Advanced English Learning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="wordwise.css">
+  <link rel="stylesheet" href="index.css">
+
+  <script src="wordwise.js" defer></script>
+  <script type="module" src="./login&signup/firebaseauth.js"></script>
+
+  <style>
+
+
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div>
+      <h1>WordWise</h1>
+      <p>Master English Grammar & Play Games</p>
+    </div>
+    <div class='button'>
+      <a href="./login&signup/login.html"><button class="login">Login</button></a>
+      <a href="./login&signup/signup.html"><button class="signup">SignUp</button></a>
+      <button class="logout" style="display: none;">Logout</button>
+    </div>
+
+  </header>
+  <nav>
+    <a href="#grammar-correction">Grammar</a>
+    <a href="#categories">Flashcards</a>
+    <a href="#add">Add Flashcard</a>
+    <a href="#games">Games</a>
+    <a href="#about">About</a>
+
+  </nav>
+  <section id="grammar-correction" class="section">
+    <h2>Grammar Correction Tool</h2>
+    <p>Enter a sentence below to check and correct grammar:</p>
+    <textarea id="text-input" rows="4"
+      style="width: 100%; padding: 1rem; border-radius: 10px; margin-top: 1rem;"></textarea>
+    <button class="correctGrammar" onclick="checkGrammar()">Correct Grammar</button>
+    <button class="replaceText" onclick="replaceText()">Replace Text</button>
+
+    <div id="correction-result" style="margin-top: 1rem;"></div>
+    <div id="corrected-text"></div>
+
+  </section>
+  <section id="categories" class="section">
+    <h2>📚 Flashcard Categories</h2>
+    <div class="categories" id="categoryContainer"></div>
+
+    <div class="flashcard-section" id="flashcardSection">
+      <div class="flashcard" onclick="flipCard()">
+        <div class="card-inner" id="cardInner">
+          <div class="card-front" id="cardFront">Front</div>
+          <div class="card-back" id="cardBack">Back</div>
+        </div>
+      </div>
+      <div class="flashcard-nav">
+        <button onclick="prevCard()">Previous</button>
+        <button onclick="nextCard()">Next</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="add" class="section">
+    <h2>➕ Add Your Own Flashcard</h2>
+    <input type="text" id="newFront" placeholder="Front (word)"><br>
+    <input type="text" id="newBack" placeholder="Back (meaning)"><br>
+    <button onclick="addFlashcard()">Add Flashcard</button>
+  </section>
+  <section id="games">
+    <h1 class="custom-heading">GAMES</h1>
+    <div class="games-grid">
+      <a href="games/hangman/index.html" target="_blank" class="game-card">
+        <img src="images/hangman-image.jpg" alt="Hangman Game" class="game-image">
+        <h3>HANGMAN</h3>
+      </a>
+      <a href="games/word-scramble/index.html" target="_blank" class="game-card">
+        <img src="images/word-scramble-image.jpg" alt="Word Scramble Game" class="game-image">
+        <h3>WORD SCRAMBLE</h3>
+      </a>
+      <a href="games/word-guessing/index.html" target="_blank" class="game-card">
+        <img src="images/word-guessing-image.jpg" alt="Word Guessing Game" class="game-image">
+        <h3>WORD GUESSING</h3>
+      </a>
+      <a href="games/typing-test/index.html" target="_blank" class="game-card">
+        <img src="images/typing-test-image.jpg" alt="Typing Test Game" class="game-image">
+        <h3>TYPING TEST</h3>
+      </a>
+      <a href="games/quiz/index.html" target="_blank" class="game-card">
+        <img src="images/image.jpg" alt="Quiz Game" class="game-image">
+        <h3>QUIZ</h3>
+      </a>
+    </div>
+  </section>
+
+  </div>
+  </section>
+  <section id="about" class="section">
+
+    <h1>About WordWise</h1>
+      <p style="margin-top: 1rem;">WordWise makes learning English easy, engaging, and effective.</p>
+      <ul style="line-height: 1.8; font-size: 1.1rem;">
+        <li><strong>Grammar Checker:</strong> Instantly catch and fix grammar mistakes to improve your writing.</li>
+        <li><strong>English Games:</strong> Play fun, educational games that boost your grammar and vocabulary.</li>
+        <li><strong>Flashcards:</strong> Learn and remember words faster with interactive flashcards.</li>
+      </ul>
+
+  </section>
+
+
+
+  <script src="grammar/grammar.js" defer></script>
+
+  <script>
+
+    //     function addFlashcard(){
+    //   const f = document.getElementById("newFront").value.trim();
+    //   const b = document.getElementById("newBack").value.trim();
+
+    //   if(!f || !b){
+    //     alert("Please fill both fields!");
+    //     return;
+    //   }
+
+    //   if(!categories["Custom"]){
+    //     categories["Custom"] = [];
+    //     const d = document.createElement("div");
+    //     d.className = "category";
+    //     d.innerText = "Custom";
+    //     d.style.background = "#ffe680"; 
+    //     d.style.color = "#000";
+    //     d.onclick = () => openCat("Custom");
+    //     catContainer.appendChild(d);
+    //   }
+
+    //   categories["Custom"].push([f, b]);
+
+    //   alert("Flashcard added to Custom category!");
+
+
+    //   openCat("Custom");
+
+
+    //   document.getElementById("newFront").value = "";
+    //   document.getElementById("newBack").value = "";
+    // }
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const userId = localStorage.getItem('loggedInUserId');
+      const loginBtn = document.querySelector('.login');
+      const signupBtn = document.querySelector('.signup');
+      const logoutBtn = document.querySelector('.logout');
+
+      if (userId) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (signupBtn) signupBtn.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+
+        logoutBtn.addEventListener('click', () => {
+          localStorage.removeItem('loggedInUserId');
+          location.reload(); // reload to reflect logged-out state
+        });
+      }
+    });
+
+    async function checkGrammar() {
+      const text = document.getElementById("text-input").value;
+
+      // Send request to LanguageTool API
+      const response = await fetch("https://api.languagetool.org/v2/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          text: text,
+          language: "en-US",
+        }),
+      });
+
+      const result = await response.json();
+
+      // Display grammar issues
+      const outputDiv = document.getElementById("correction-result");
+      outputDiv.innerHTML = "<h3>Grammar Issues:</h3>";
+      correctedText = text;
+
+      result.matches.forEach((match) => {
+        const issue = document.createElement("p");
+        issue.textContent = `Error: ${match.message}`;
+
+        if (match.replacements.length > 0) {
+          const suggestion = `Suggestion: ${match.replacements[0].value}`;
+          issue.textContent += ` (${suggestion})`;
+
+          // Apply the first replacement to generate corrected text
+          correctedText = correctedText.replace(
+            text.substring(match.offset, match.offset + match.length),
+            match.replacements[0].value
+          );
+        }
+
+        outputDiv.appendChild(issue);
+      });
+
+      // Display corrected sentence
+      const correctedDiv = document.getElementById("corrected-text");
+      correctedDiv.innerHTML = `<h3>Corrected Sentence:</h3><p>${correctedText}</p>`;
+    }
+
+    // Replace the textbox content with the corrected text
+    function replaceText() {
+      const textInput = document.getElementById("text-input");
+      if (correctedText) {
+        textInput.value = correctedText;
+      } else {
+        alert("No corrections available. Please check the grammar first.");
+      }
+    }
+
+  </script>
+</body>
+
+</html>
